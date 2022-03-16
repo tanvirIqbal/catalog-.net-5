@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Repositories.Interfaces;
 
 namespace API.Repositories
 {
-    public class InMemRepository
+    public class InMemRepository : IItemRepository
     {
         private readonly List<Item> items = new()
         {
-            new Item() { Id = Guid.NewGuid(), Name = "Potion", Price = 9, CreatedDate = DateTime.Now},
-            new Item() { Id = Guid.NewGuid(), Name = "Iron Sword", Price = 20, CreatedDate = DateTime.Now},
-            new Item() { Id = Guid.NewGuid(), Name = "Bronze Shield", Price = 18, CreatedDate = DateTime.Now}
+            new Item() { Id = Guid.NewGuid(), Name = "Potion", Price = 9, CreatedDate = DateTime.Now },
+            new Item() { Id = Guid.NewGuid(), Name = "Iron Sword", Price = 20, CreatedDate = DateTime.Now },
+            new Item() { Id = Guid.NewGuid(), Name = "Bronze Shield", Price = 18, CreatedDate = DateTime.Now }
         };
 
         public IEnumerable<Item> GetItems()
@@ -23,6 +24,6 @@ namespace API.Repositories
         public Item GetItem(Guid Id)
         {
             return items.Where(x => x.Id == Id).SingleOrDefault();
-        } 
+        }
     }
 }

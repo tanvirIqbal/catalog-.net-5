@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Repositories;
+using API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,24 +15,24 @@ namespace API.Controllers
     public class Items : Controller
     {
         private readonly ILogger<Items> _logger;
-        private readonly InMemRepository _inMemRepository;
+        private readonly IItemRepository _itemRepository;
 
-        public Items(ILogger<Items> logger)
+        public Items(ILogger<Items> logger, IItemRepository itemRepository)
         {
             _logger = logger;
-            _inMemRepository = new();
+            _itemRepository = itemRepository;
         }
 
         [HttpGet]
         public IEnumerable<Item> GetItems()
         {
-            return _inMemRepository.GetItems();
+            return _itemRepository.GetItems();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Item> GetItem(Guid id)
         {
-            var item = _inMemRepository.GetItem(id);
+            var item = _itemRepository.GetItem(id);
             if (item is null)
             {
                 return NotFound();
