@@ -25,5 +25,16 @@ namespace API.Repositories
         {
             return items.Where(x => x.Id == Id).SingleOrDefault();
         }
+
+        public void Create(Item item)
+        {
+            items.Add(item);
+        }
+
+        public void Update(Item item)
+        {
+            int index = items.FindIndex(x => x.Id == item.Id);
+            items[index] = item;
+        }
     }
 }

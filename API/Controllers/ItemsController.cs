@@ -40,5 +40,19 @@ namespace API.Controllers
             }
             return Ok(item.ConvertItemToItemDTO());
         }
+
+        [HttpPost]
+        public ActionResult<ItemDTO> CreateItem(CreateItemDTO createItemDTO)
+        {
+            Item item = new Item()
+            {
+                Id = Guid.NewGuid(),
+                Name = createItemDTO.Name,
+                Price = createItemDTO.Price,
+                CreatedDate = DateTime.Now
+            };
+
+            return CreatedAtAction(nameof(GetItem), new { id = item.Id}, item.ConvertItemToItemDTO());
+        }
     }
 }
