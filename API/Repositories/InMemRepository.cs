@@ -16,31 +16,34 @@ namespace API.Repositories
             new Item() { Id = Guid.NewGuid(), Name = "Bronze Shield", Price = 18, CreatedDate = DateTime.Now }
         };
 
-        public IEnumerable<Item> GetItems()
+        public async Task<IEnumerable<Item>> GetItemsAsync()
         {
-            return items;
+            return await Task.FromResult(items);
         }
 
-        public Item GetItem(Guid Id)
+        public async Task<Item> GetItemAsync(Guid Id)
         {
-            return items.Where(x => x.Id == Id).SingleOrDefault();
+            return await Task.FromResult(items.Where(x => x.Id == Id).SingleOrDefault());
         }
 
-        public void Create(Item item)
+        public async Task CreateAsync(Item item)
         {
             items.Add(item);
+            await Task.CompletedTask;
         }
 
-        public void Update(Item item)
+        public async Task UpdateAsync(Item item)
         {
             int index = items.FindIndex(x => x.Id == item.Id);
             items[index] = item;
+            await Task.CompletedTask;
         }
 
-        public void Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             int index = items.FindIndex(x => x.Id == id);
             items.RemoveAt(index);
+            await Task.CompletedTask;
         }
     }
 }

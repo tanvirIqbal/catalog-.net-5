@@ -8,10 +8,10 @@ namespace API.Repositories.Interfaces
 {
     public interface IItemRepository
     {
-        Item GetItem(Guid Id);
-        IEnumerable<Item> GetItems();
-        void Create(Item item);
-        void Update(Item item);
-        void Delete(Guid id);
+        Task<Item> GetItemAsync(Guid Id);
+        Task<IEnumerable<Item>> GetItemsAsync();
+        Task CreateAsync(Item item);
+        Task UpdateAsync(Item item);
+        Task DeleteAsync(Guid id);
     }
 }
