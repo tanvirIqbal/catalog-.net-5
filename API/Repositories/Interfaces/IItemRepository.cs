@@ -12,5 +12,6 @@ namespace API.Repositories.Interfaces
         IEnumerable<Item> GetItems();
         void Create(Item item);
         void Update(Item item);
+        void Delete(Guid id);
     }
 }

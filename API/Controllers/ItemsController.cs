@@ -27,7 +27,7 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<ItemDTO> GetItems()
         {
-            return _itemRepository.GetItems().Select(item => item.ConvertItemToItemDTO());
+            return _itemRepository.GetItems().Select(item => item.ConvertToDTO());
         }
 
         [HttpGet("{id}")]
@@ -38,7 +38,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            return Ok(item.ConvertItemToItemDTO());
+            return Ok(item.ConvertToDTO());
         }
 
         [HttpPost]
@@ -51,8 +51,40 @@ namespace API.Controllers
                 Price = createItemDTO.Price,
                 CreatedDate = DateTime.Now
             };
+            _itemRepository.Create(item);
+            return CreatedAtAction(nameof(GetItem), new { id = item.Id}, item.ConvertToDTO());
+        }
 
-            return CreatedAtAction(nameof(GetItem), new { id = item.Id}, item.ConvertItemToItemDTO());
+        [HttpPut("{id}")]
+        public ActionResult UpdateItem(Guid id, UpdateItemDTO updateItemDTO)
+        {
+            Item existingItem = _itemRepository.GetItem(id);
+            if (existingItem is null)
+            {
+                return NotFound();
+            }
+
+            existingItem.Name = updateItemDTO.Name;
+            existingItem.Price = updateItemDTO.Price;
+
+            _itemRepository.Update(existingItem);
+
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteItem(Guid id)
+        {
+            Item existingItem = _itemRepository.GetItem(id);
+            if (existingItem is null)
+            {
+                return NotFound();
+            }
+
+            _itemRepository.Delete(id);
+            
+            return NoContent();
         }
     }
 }

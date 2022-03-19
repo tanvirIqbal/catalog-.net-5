@@ -36,5 +36,11 @@ namespace API.Repositories
             int index = items.FindIndex(x => x.Id == item.Id);
             items[index] = item;
         }
+
+        public void Delete(Guid id)
+        {
+            int index = items.FindIndex(x => x.Id == id);
+            items.RemoveAt(index);
+        }
     }
 }

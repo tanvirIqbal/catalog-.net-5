@@ -9,7 +9,7 @@ namespace API
 {
     public static class Extensions
     {
-        public static ItemDTO ConvertItemToItemDTO(this Item item)
+        public static ItemDTO ConvertToDTO(this Item item)
         {
             return new ItemDTO
             {
