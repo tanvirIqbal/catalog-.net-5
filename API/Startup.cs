@@ -29,7 +29,9 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IItemRepository, InMemRepository>();
-            services.AddControllers();
+            services.AddControllers(option => {
+                option.SuppressAsyncSuffixInActionNames = false;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
